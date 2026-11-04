@@ -218,7 +218,7 @@ if not DEBUG:
 
 DEFAULT_FROM_EMAIL = env(
     "DEFAULT_FROM_EMAIL",
-    default="Citi Bank <noreply@localhost>",
+    default="Prestige Wealth Bank <noreply@localhost>",
 )
 EMAIL_HOST = env("EMAIL_HOST", default="")
 EMAIL_PORT = env.int("EMAIL_PORT", default=587)

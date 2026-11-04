@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Citi Bank{% endblock %}</title>
-  <meta name="description" content="Citi Bank online banking.">
+  <title>{% block title %}Prestige Wealth Bank{% endblock %}</title>
+  <meta name="description" content="Prestige Wealth Bank online banking.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,8 +17,8 @@
   <div class="shell">
     <header class="topbar">
       <a class="brand" href="{% if user.is_authenticated %}{% url 'accounts:dashboard' %}{% else %}{% url 'landing' %}{% endif %}">
-        <span class="mark" aria-hidden="true">C</span>
-        <span class="brand-name">Citi Bank</span>
+        <span class="mark" aria-hidden="true">P</span>
+        <span class="brand-name">Prestige Wealth Bank</span>
       </a>
       <nav class="nav" aria-label="Primary">
         {% if user.is_authenticated %}
@@ -48,7 +48,7 @@
       {% block content %}{% endblock %}
     </main>
     <footer class="footer">
-      <p>© Citi Bank</p>
+      <p>© Prestige Wealth Bank</p>
     </footer>
   </div>
   <script src="{% static 'js/auth.js' %}" defer></script>

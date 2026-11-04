@@ -30,7 +30,7 @@ from ledger.models import SampleTransaction
 
 
 def health_check(request):
-    return JsonResponse({"status": "ok", "service": "citi-bank"})
+    return JsonResponse({"status": "ok", "service": "prestige-wealth-bank"})
 
 
 def landing(request):

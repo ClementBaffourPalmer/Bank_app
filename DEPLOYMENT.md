@@ -165,7 +165,7 @@ Set these in **Render → your service → Environment**. Values are examples; r
 | `EMAIL_HOST_USER` | SMTP username |
 | `EMAIL_HOST_PASSWORD` | SMTP password / app password |
 | `EMAIL_USE_TLS` | `True` |
-| `DEFAULT_FROM_EMAIL` | `Aureta Digital <noreply@yourdomain>` |
+| `DEFAULT_FROM_EMAIL` | `Prestige Wealth Bank <noreply@yourdomain>` |
 
 The application **refuses to start** in production if `SECRET_KEY`, `ALLOWED_HOSTS`, `CSRF_TRUSTED_ORIGINS`, or `DATABASE_URL` is missing, or if `SECRET_KEY` is a known insecure placeholder.
 

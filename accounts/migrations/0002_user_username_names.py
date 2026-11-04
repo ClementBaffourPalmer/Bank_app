@@ -1,4 +1,4 @@
-# Generated manually for Citi Bank Academic Banking Application
+# Generated manually for Prestige Wealth Bank Academic Banking Application
 
 from decimal import Decimal
 
