@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-layout">
+  <section class="auth-card">
+    <h1>Too many sign-in attempts</h1>
+    <p>This email and network combination is temporarily locked after repeated failed attempts. Wait about an hour, then try again.</p>
+    <p><a href="{% url 'accounts:login' %}">Return to sign in</a></p>
+  </section>
+</div>
+{% endblock %}

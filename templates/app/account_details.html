@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}Account · Citi Bank{% endblock %}
+{% block content %}
+<section class="page-header">
+  <p class="kicker">Account overview</p>
+  <h1>Account details</h1>
+</section>
+
+<section class="dashboard-grid account-top">
+  <article class="balance-card">
+    <p class="kicker">Available Balance</p>
+    <p class="balance-value" aria-live="polite">{% simulated_balance account.available_balance hidden=hide_balance currency=account.currency %}</p>
+    <p>Account {{ account.account_number }} · {{ account.currency }}</p>
+    <form method="post" action="{% url 'accounts:toggle_balance' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <button class="btn secondary balance-toggle" type="submit">{% if hide_balance %}Show balance{% else %}Hide balance{% endif %}</button>
+    </form>
+  </article>
+  <aside class="panel holder-card">
+    <p class="kicker">Account holder</p>
+    <h2>{{ user.get_full_name }}</h2>
+    <ul class="holder-meta">
+      <li>{{ user.email }}</li>
+      <li>@{{ user.username }}</li>
+      <li>{{ user.profile.phone|default:"No phone on file" }}</li>
+    </ul>
+  </aside>
+</section>
+
+<section class="panel details-panel">
+  <div class="details-heading">
+    <p class="kicker">Account information</p>
+    <h2>Profile & account summary</h2>
+  </div>
+  <dl class="detail-list">
+    <div class="detail-row">
+      <dt>Account number</dt>
+      <dd>{{ account.account_number }}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Available Balance</dt>
+      <dd>{% simulated_balance account.available_balance hidden=hide_balance currency=account.currency %}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Account holder</dt>
+      <dd>{{ user.get_full_name }}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Email</dt>
+      <dd>{{ user.email }}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Username</dt>
+      <dd>@{{ user.username }}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Phone</dt>
+      <dd>{{ user.profile.phone|default:"Not provided" }}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Currency</dt>
+      <dd>{{ account.currency }}</dd>
+    </div>
+    <div class="detail-row">
+      <dt>Status</dt>
+      <dd><span class="status-pill">Active</span></dd>
+    </div>
+    <div class="detail-row">
+      <dt>Opened</dt>
+      <dd>{{ account.created_at|date:"M j, Y" }}</dd>
+    </div>
+  </dl>
+</section>
+{% endblock %}

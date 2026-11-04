@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}Statements · Citi Bank{% endblock %}
+{% block content %}
+<section class="panel">
+  <p class="kicker">Statements</p>
+  <h1>Account statements</h1>
+  <p class="muted">Account {{ account.account_number }} · Available Balance {% simulated_balance account.available_balance hidden=hide_balance currency=account.currency %}</p>
+
+  {% if statement_rows %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Entries</th>
+            <th>Credits</th>
+            <th>Debits</th>
+            <th>Net</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in statement_rows %}
+            <tr>
+              <td>{{ row.label }}</td>
+              <td>{{ row.count }}</td>
+              <td>{{ row.credits|money }}</td>
+              <td>{{ row.debits|money }}</td>
+              <td>{{ row.net|money }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      <h2>No statements yet</h2>
+      <p class="muted">Activity will appear here after your account is created.</p>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load money %}
+{% block title %}Dashboard · Citi Bank{% endblock %}
+{% block content %}
+<h1 class="welcome-line">Welcome back, {{ user.get_short_name }}</h1>
+
+<section class="dashboard-grid">
+  <article class="balance-card">
+    <p class="kicker">Available Balance</p>
+    <p class="balance-value" aria-live="polite">{% simulated_balance account.available_balance hidden=hide_balance currency=account.currency %}</p>
+    <p>Account {{ account.account_number }} · {{ account.currency }}</p>
+    <form method="post" action="{% url 'accounts:toggle_balance' %}">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <button class="btn secondary" type="submit">{% if hide_balance %}Show balance{% else %}Hide balance{% endif %}</button>
+    </form>
+  </article>
+  <aside class="panel">
+    <p class="kicker">Account overview</p>
+    <h2>{{ user.get_full_name }}</h2>
+    <p class="muted">{{ user.email }} · @{{ user.username }}</p>
+  </aside>
+</section>
+
+<nav class="quick-links" aria-label="Dashboard sections">
+  <a class="quick-link" href="{% url 'accounts:account' %}">
+    <strong>Account</strong>
+    <span class="muted">Number, holder, and status</span>
+  </a>
+  <a class="quick-link" href="{% url 'ledger:transactions' %}">
+    <strong>Transactions</strong>
+    <span class="muted">Full transaction history</span>
+  </a>
+  <a class="quick-link" href="{% url 'accounts:statements' %}">
+    <strong>Statements</strong>
+    <span class="muted">Monthly activity summary</span>
+  </a>
+  <a class="quick-link" href="{% url 'accounts:profile' %}">
+    <strong>Profile settings</strong>
+    <span class="muted">Name, phone, preferences</span>
+  </a>
+</nav>
+
+<section class="stats">
+  <article class="stat">
+    <p class="kicker">Currency</p>
+    <h2>{{ account.currency }}</h2>
+  </article>
+  <article class="stat">
+    <p class="kicker">Account activity</p>
+    <h2>{{ recent_transactions|length }} recent</h2>
+  </article>
+  <article class="stat">
+    <p class="kicker">Opened</p>
+    <h2>{{ account.created_at|date:"M j, Y" }}</h2>
+  </article>
+</section>
+
+<section class="panel">
+  <h2>Recent transactions</h2>
+  {% include "app/_transaction_table.html" with transactions=recent_transactions %}
+  <p><a href="{% url 'ledger:transactions' %}">View full transaction history</a></p>
+</section>
+{% endblock %}

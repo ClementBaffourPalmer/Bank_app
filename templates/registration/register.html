@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Create Account · Citi Bank{% endblock %}
+{% block content %}
+<div class="auth-layout">
+  <div class="auth-shell">
+    <aside class="auth-visual">
+      <div>
+        <p class="kicker" style="color: rgba(244,248,252,0.75);">Open an account</p>
+        <h2>Create your banking profile</h2>
+        <p>Register to access your personal dashboard and account balance.</p>
+      </div>
+    </aside>
+    <section class="auth-card">
+      <p class="kicker">Register</p>
+      <h1>Create Account</h1>
+      <p class="muted">Passwords must be at least 10 characters.</p>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="field-row">
+          <label class="field" for="id_first_name">
+            First name
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+          </label>
+          <label class="field" for="id_last_name">
+            Last name
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+          </label>
+        </div>
+        <label class="field" for="id_email">
+          Email address
+          {{ form.email }}
+          {{ form.email.errors }}
+        </label>
+        <label class="field" for="id_username">
+          Username
+          {{ form.username }}
+          {{ form.username.errors }}
+        </label>
+        <label class="field" for="id_phone">
+          Phone number
+          {{ form.phone }}
+          {{ form.phone.errors }}
+        </label>
+        <label class="field password-field" for="id_password">
+          Password
+          {{ form.password }}
+          <button type="button" class="password-toggle" data-password-toggle data-target="id_password" aria-pressed="false">Show</button>
+          {{ form.password.errors }}
+        </label>
+        <div class="strength" aria-live="polite">
+          <div id="password-strength-meter" class="strength-meter" data-score="0" style="--strength: 0%;"></div>
+          <p id="password-strength-label" class="strength-label">Enter a password</p>
+        </div>
+        <label class="field password-field" for="id_password_confirm">
+          Confirm password
+          {{ form.password_confirm }}
+          <button type="button" class="password-toggle" data-password-toggle data-target="id_password_confirm" aria-pressed="false">Show</button>
+          {{ form.password_confirm.errors }}
+        </label>
+        <button class="btn" type="submit">Create Account</button>
+      </form>
+      <p class="muted">Already registered? <a href="{% url 'accounts:login' %}">Sign In</a></p>
+    </section>
+  </div>
+</div>
+{% endblock %}

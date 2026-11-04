@@ -1,0 +1,24 @@
+# Optional Render Blueprint. You can still create the web service in the dashboard.
+# Secrets must be set in the Render dashboard, not in this file.
+services:
+  - type: web
+    name: aureta-digital
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    preDeployCommand: bash scripts/release.sh
+    startCommand: gunicorn config.wsgi:application
+    healthCheckPath: /health/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.4
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false

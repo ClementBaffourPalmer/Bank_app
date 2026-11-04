@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="{% if dark_mode %}dark{% else %}light{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Citi Bank{% endblock %}</title>
+  <meta name="description" content="Citi Bank online banking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="{% if user.is_authenticated %}{% url 'accounts:dashboard' %}{% else %}{% url 'landing' %}{% endif %}">
+        <span class="mark" aria-hidden="true">C</span>
+        <span class="brand-name">Citi Bank</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        {% if user.is_authenticated %}
+          <a href="{% url 'accounts:dashboard' %}" {% if request.resolver_match.url_name == 'dashboard' %}aria-current="page"{% endif %}>Overview</a>
+          <a href="{% url 'accounts:account' %}" {% if request.resolver_match.url_name == 'account' %}aria-current="page"{% endif %}>Account</a>
+          <a href="{% url 'ledger:transactions' %}" {% if request.resolver_match.url_name == 'transactions' %}aria-current="page"{% endif %}>Activity</a>
+          <a href="{% url 'accounts:statements' %}" {% if request.resolver_match.url_name == 'statements' %}aria-current="page"{% endif %}>Statements</a>
+          <a href="{% url 'accounts:profile' %}" {% if request.resolver_match.url_name == 'profile' %}aria-current="page"{% endif %}>Profile</a>
+          <form class="inline-form" method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button class="linkish" type="submit">Log out</button>
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}">Sign In</a>
+          <a class="btn" href="{% url 'accounts:register' %}">Create Account</a>
+        {% endif %}
+      </nav>
+    </header>
+    <main id="main">
+      {% if messages %}
+        <ul class="messages" aria-live="polite">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+      <p>© Citi Bank</p>
+    </footer>
+  </div>
+  <script src="{% static 'js/auth.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

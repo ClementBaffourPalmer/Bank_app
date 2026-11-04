@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Transaction History · Citi Bank{% endblock %}
+{% block content %}
+<section class="panel">
+  <p class="kicker">Account activity</p>
+  <h1>Transaction history</h1>
+  <form class="filters" method="get">
+    <label class="field">
+      Search
+      <input class="field-input" type="search" name="q" value="{{ query }}" placeholder="Description or reference">
+    </label>
+    <label class="field">
+      Type
+      <select name="type">
+        <option value="">All types</option>
+        <option value="CREDIT" {% if selected_type == "CREDIT" %}selected{% endif %}>Credit</option>
+        <option value="DEBIT" {% if selected_type == "DEBIT" %}selected{% endif %}>Debit</option>
+      </select>
+    </label>
+    <label class="field">
+      Status
+      <select name="status">
+        <option value="">All statuses</option>
+        <option value="POSTED" {% if selected_status == "POSTED" %}selected{% endif %}>Posted</option>
+        <option value="PENDING" {% if selected_status == "PENDING" %}selected{% endif %}>Pending</option>
+      </select>
+    </label>
+    <button class="btn" type="submit">Filter</button>
+  </form>
+  {% if is_empty %}
+    <div class="empty">
+      <h2>No matching records</h2>
+      <p class="muted">Try a different search or clear the filters.</p>
+    </div>
+  {% else %}
+    {% include "app/_transaction_table.html" with transactions=page.object_list %}
+    <div class="pagination">
+      {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number }}&q={{ query }}&type={{ selected_type }}&status={{ selected_status }}">Previous</a>
+      {% endif %}
+      <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}&q={{ query }}&type={{ selected_type }}&status={{ selected_status }}">Next</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

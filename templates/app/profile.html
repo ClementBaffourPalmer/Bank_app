@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Profile Settings · Citi Bank{% endblock %}
+{% block content %}
+<section class="auth-card" style="margin: 20px auto;">
+  <p class="kicker">Profile settings</p>
+  <h1>Account preferences</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="field-row">
+      <label class="field">First name {{ form.first_name }} {{ form.first_name.errors }}</label>
+      <label class="field">Last name {{ form.last_name }} {{ form.last_name.errors }}</label>
+    </div>
+    <label class="field">Preferred name {{ form.preferred_name }}</label>
+    <label class="field">Phone {{ form.phone }}</label>
+    <label class="checkbox-row">
+      {{ form.dark_mode }} Use dark mode
+    </label>
+    <button class="btn" type="submit">Save changes</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Sign In · Citi Bank{% endblock %}
+{% block content %}
+<div class="auth-layout">
+  <div class="auth-shell">
+    <aside class="auth-visual">
+      <div>
+        <p class="kicker" style="color: rgba(244,248,252,0.75);">Citi Bank</p>
+        <h2>Welcome back</h2>
+        <p>Sign in to view your account overview, balance, and recent activity.</p>
+      </div>
+    </aside>
+    <section class="auth-card">
+      <p class="kicker">Welcome</p>
+      <h1>Sign In</h1>
+      <p class="muted">Use your registered email address or username.</p>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <label class="field" for="id_username">
+          Email or username
+          {{ form.username }}
+          {{ form.username.errors }}
+        </label>
+        <label class="field password-field" for="id_password">
+          Password
+          {{ form.password }}
+          <button type="button" class="password-toggle" data-password-toggle data-target="id_password" aria-pressed="false">Show</button>
+          {{ form.password.errors }}
+        </label>
+        <label class="checkbox-row" for="id_remember_me">
+          {{ form.remember_me }}
+          Remember me
+        </label>
+        <button class="btn" type="submit">Sign In</button>
+      </form>
+      <p><a href="{% url 'accounts:password_reset' %}">Forgot password?</a></p>
+      <p class="muted">New here? <a href="{% url 'accounts:register' %}">Create Account</a></p>
+    </section>
+  </div>
+</div>
+{% endblock %}
